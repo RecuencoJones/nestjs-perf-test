@@ -1,23 +1,15 @@
 import { Module } from '@nestjs/common'
-import { HealthController } from './controllers/health.controller'
-import { MetricsController } from './controllers/metrics.controller'
-import { MetricsService } from './services/metrics.service'
-import { SampleController } from './controllers/sample.controller'
-import { SampleService } from './services/sample.service'
-import { DatabaseModule } from './database/database.module'
+import { ConfigModule } from './modules/config/config.module'
+import { DatabaseModule } from './modules/database/database.module'
+import { MetricsModule } from './modules/metrics/metrics.module'
+import { SampleModule } from './modules/sample/sample.module'
 
 @Module({
   imports: [
-    DatabaseModule
-  ],
-  controllers: [
-    HealthController,
-    MetricsController,
-    SampleController
-  ],
-  providers: [
-    MetricsService,
-    SampleService
+    ConfigModule,
+    MetricsModule,
+    DatabaseModule,
+    SampleModule
   ]
 })
 export class AppModule {}

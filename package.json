@@ -6,12 +6,14 @@
     "start": "concurrently \"npm run build:dev\" \"npm run serve:dev\"",
     "build": "tsc",
     "build:dev": "tsc -w",
+    "serve": "node dist/main.js",
     "serve:dev": "nodemon --watch ./dist dist/main.js",
     "lint": "tslint -p tsconfig.json"
   },
   "dependencies": {
     "@nestjs/common": "5.0.0",
     "@nestjs/core": "5.0.0",
+    "dotenv": "5.0.1",
     "mysql": "2.15.0",
     "prom-client": "11.0.0",
     "reflect-metadata": "0.1.12",
@@ -19,6 +21,7 @@
     "typeorm": "0.2.6"
   },
   "devDependencies": {
+    "@types/dotenv": "4.0.3",
     "@types/node": "10.1.1",
     "concurrently": "3.5.1",
     "nodemon": "1.17.4",
