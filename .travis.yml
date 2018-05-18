@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+- "10"
+- "8"
+
+install:
+- npm i
+
+script:
+- npm run build
+- npm run lint
