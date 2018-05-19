@@ -13,7 +13,7 @@ async function bootstrap() {
   const config = app.select(ConfigModule).get(ConfigService)
 
   await app.listen(config.get('PORT') || 3000)
-    .then(() => metrics.setRampUpTime(timer))
+    .then(() => metrics.setRampUpTime(process.hrtime(timer)))
 }
 
 bootstrap()

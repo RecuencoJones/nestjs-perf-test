@@ -7,9 +7,7 @@ export class MetricsService {
     client.collectDefaultMetrics({ timeout: 1000 })
   }
 
-  public setRampUpTime(timer) {
-    const [ seconds, nanos ] = process.hrtime(timer)
-
+  public setRampUpTime([ seconds, nanos ]) {
     new client.Gauge({
       name: 'ramp_up_time',
       help: 'time it took for service to be ready (ns)'
