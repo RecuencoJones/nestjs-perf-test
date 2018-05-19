@@ -1,0 +1,85 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nestjs-perf-test
+  labels:
+    app: nestjs-perf-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels: nestjs-perf-test
+  template:
+    metadata:
+      labels:
+        app: nestjs-perf-test
+    spec:
+      containers:
+      - name: nestjs-perf-test
+        image: recuencojones/nestjs-perf-test
+        ports:
+        - name: default-port
+          containerPort: 3000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: host
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: port
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-config
+              key: name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: pass
+        readinessProve:
+          httpGet:
+            path: /health
+            port: default-port
+          initialDelaySeconds: 1
+          periodSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: default-port
+          initialDelaySeconds: 1
+          periodSeconds: 5
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: nestjs-perf-test
+spec:
+  selector:
+    app: nestjs-perf-test
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  type: LoadBalancer
+---
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: nestjs-perf-test
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: nestjs-perf-test
+          servicePort: 80
