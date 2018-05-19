@@ -8,7 +8,10 @@
     "build:dev": "tsc -w",
     "serve": "node dist/main.js",
     "serve:dev": "nodemon --watch ./dist dist/main.js",
-    "lint": "tslint -p tsconfig.json"
+    "test": "jest --config test/config/jest.config.js",
+    "lint": "npm run lint:src && npm run lint:test",
+    "lint:src": "tslint -p tsconfig.json",
+    "lint:test": "tslint -p tsconfig.test.json"
   },
   "dependencies": {
     "@nestjs/common": "5.0.0",
@@ -21,10 +24,14 @@
     "typeorm": "0.2.6"
   },
   "devDependencies": {
+    "@nestjs/testing": "5.0.0",
     "@types/dotenv": "4.0.3",
+    "@types/jest": "22.2.3",
     "@types/node": "10.1.1",
     "concurrently": "3.5.1",
+    "jest": "22.4.4",
     "nodemon": "1.17.4",
+    "ts-jest": "22.4.6",
     "tslint": "5.10.0",
     "typescript": "2.8.3"
   }

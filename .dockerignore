@@ -1,7 +1,9 @@
 .vscode
 .dockerignore
 .gitignore
+.env
 node_modules
+coverage
 dist
 tslint.json
 Dockerfile

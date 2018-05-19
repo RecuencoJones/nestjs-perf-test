@@ -10,8 +10,6 @@ export class ConfigService {
   public constructor() {
     config()
     this.config = process.env
-
-    console.log(this.config)
   }
 
   public get(key: string): any {
